@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, Input, Tooltip, Icon } from 'antd';
+import { Form, Input, Tooltip, Icon, Button } from 'antd';
 
   
-  class RegistrationForm extends React.Component {
+class RegistrationForm extends React.Component {
     state = {
       confirmDirty: false,
       autoCompleteResult: [],
@@ -60,9 +60,19 @@ import { Form, Input, Tooltip, Icon } from 'antd';
           xs: { span: 24 },
           sm: { span: 16 },},
       };
+
+      const tailFormItemLayout = {
+        wrapperCol: {
+          xs: {
+            span: 24,
+            offset: 0, },
+          sm: {
+            span: 16,
+            offset: 8,},},
+      };
      
       return (
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form {...formItemLayout} onSubmit={this.handleSubmit} className="register">
             <Form.Item label = {
                         <span> Username&nbsp;
                                 <Tooltip title="What do you want others to call you?">
@@ -74,29 +84,35 @@ import { Form, Input, Tooltip, Icon } from 'antd';
                 { rules: [
                     { required: true, message: 'Please input your username!'}],
                 })(<Input />)}
-          </Form.Item>
+            </Form.Item>
 
-          <Form.Item label="Password" hasFeedback>
-            { getFieldDecorator (
-                'password', 
-                { rules: [
-                    { required: true, message: 'Please input your password!'},
-                    { validator: this.validateToNextPassword },],
-                })(<Input.Password />)}
-          </Form.Item>
+            <Form.Item label="Password" hasFeedback>
+                { getFieldDecorator (
+                    'password', 
+                    { rules: [
+                        { required: true, message: 'Please input your password!'},
+                        { validator: this.validateToNextPassword },],
+                    })(<Input.Password />)}
+            </Form.Item>
 
-          <Form.Item label="Confirm Password" hasFeedback>
-            { getFieldDecorator (
-                'confirm', 
-                { rules: [
-                    { required: true, message: 'Please confirm your password!',},
-                    { validator: this.compareToFirstPassword,},],
-                })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-          </Form.Item>
+            <Form.Item label="Confirm Password" hasFeedback>
+                { getFieldDecorator (
+                    'confirm', 
+                    { rules: [
+                        { required: true, message: 'Please confirm your password!',},
+                        { validator: this.compareToFirstPassword,},],
+                    })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+            </Form.Item>
+
+            <Form.Item {...tailFormItemLayout}>
+                <Button type="primary" htmlType="submit">
+                    Register
+                </Button>
+            </Form.Item>
         </Form>
       );
     }
-  }
+}
 
 // HighOrderComponent is a function. 
 // Take in Component, return enhanced (UI+Config) Component.
