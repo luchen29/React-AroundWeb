@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Input, Tooltip, Icon, Button } from 'antd';
+import { Form, Input, Tooltip, Icon, Button, message } from 'antd';
+import { Link } from 'react-router-dom';
+import { API_ROOT } from '../constants';
 
-  
 class RegistrationForm extends React.Component {
     state = {
       confirmDirty: false,
@@ -12,6 +13,28 @@ class RegistrationForm extends React.Component {
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          fetch(`${API_ROOT}/signup`, 
+          {
+            method:'POST',
+            body:JSON.stringify({
+              username: values.username,
+              password: values.password,
+            })
+          })
+          .then((response) => {
+            if (response.ok) {
+              return response.text();
+            } 
+            throw new Error(response.statusText);
+          })
+          .then( (data) => {
+            console.log(data);
+            message.success('Registration Succeed!');
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error('Registration Failed!');
+          })
         }
       });
     };
@@ -103,6 +126,7 @@ class RegistrationForm extends React.Component {
                 <Button type="primary" htmlType="submit">
                     Register
                 </Button>
+                <p>I already have an account, go back to <Link to="/login">login</Link></p>
             </Form.Item>
         </Form>
       );
