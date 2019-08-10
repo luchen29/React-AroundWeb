@@ -7,7 +7,6 @@ class RegistrationForm extends React.Component {
       confirmDirty: false,
       autoCompleteResult: [],
     };
-  
     handleSubmit = e => {
       e.preventDefault();
       this.props.form.validateFieldsAndScroll((err, values) => {
@@ -16,12 +15,10 @@ class RegistrationForm extends React.Component {
         }
       });
     };
-  
     handleConfirmBlur = e => {
       const { value } = e.target;
       this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     };
-  
     compareToFirstPassword = (rule, value, callback) => {
       const { form } = this.props;
       if (value && value !== form.getFieldValue('password')) {
@@ -30,7 +27,6 @@ class RegistrationForm extends React.Component {
         callback();
       }
     };
-  
     validateToNextPassword = (rule, value, callback) => {
       const { form } = this.props;
       if (value && this.state.confirmDirty) {
@@ -38,7 +34,6 @@ class RegistrationForm extends React.Component {
       }
       callback();
     };
-  
     handleWebsiteChange = value => {
       let autoCompleteResult;
       if (!value) {
