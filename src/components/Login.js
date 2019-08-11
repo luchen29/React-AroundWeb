@@ -25,6 +25,7 @@ class NormalLoginForm extends React.Component {
         })
         .then((data) => {
             console.log(data)
+            this.props.handleLoginSucceed(data)
             message.success('Login Succeed!')
             
         }) 
