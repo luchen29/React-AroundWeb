@@ -22,8 +22,8 @@ export class CreatePostButton extends React.Component {
                 const token = localStorage.getItem(TOKEN_KEY);
                 const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
                 const formData = new FormData();
-                formData.set('lat', lat + LOC_SHAKE + Math.random() * 2 - LOC_SHAKE);
-                formData.set('lon', lon + LOC_SHAKE + Math.random() * 2 - LOC_SHAKE);
+                formData.set('lat', lat);
+                formData.set('lon', lon);
                 formData.set('message', values.message);
                 formData.set('image', values.image[0].originFileObj);
                 
@@ -36,10 +36,11 @@ export class CreatePostButton extends React.Component {
                     body: formData,
                 })
                 .then((response) => {
-                    if(response.ok) {
+                    if (response.ok) {
                         console.log(this.props);
-                        return this.props.loadNearbyPosts();
-                    } throw new Error('Failed to create post.')
+                        return this.props.loadPostsByTopic();
+                    } 
+                    throw new Error('Failed to create post.')
                 })
                 .then(()=>{
                     this.setState({visible: false, confirmLoading: false});
@@ -47,7 +48,7 @@ export class CreatePostButton extends React.Component {
                     message.success('Post create successfully!');
                 })
                 .catch((e)=>{
-                    console.log(e);
+                    console.error(e);
                     message.error('Failed to create post.');
                     this.setState({confirmLoading: false});
                 });

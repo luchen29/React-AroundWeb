@@ -8,6 +8,7 @@ export class Main extends React.Component{
     getLogin = () => {
         return this.props.isLoggedIn ? <Redirect to="/home"/> : <Login handleLoginSucceed={this.props.handleLoginSucceed}/>
     }
+    
     getHome = () => {
         return this.props.isLoggedIn ? <Home/> : <Redirect to="/login"/>
     }

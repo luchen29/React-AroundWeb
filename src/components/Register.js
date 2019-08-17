@@ -8,9 +8,10 @@ class RegistrationForm extends React.Component {
       confirmDirty: false,
       autoCompleteResult: [],
     };
+
     handleSubmit = e => {
       e.preventDefault();
-      this.props.form.validateFieldsAndScroll((err, values) => {
+      this.props.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
           fetch(`${API_ROOT}/signup`, 
@@ -39,10 +40,12 @@ class RegistrationForm extends React.Component {
         }
       });
     };
+
     handleConfirmBlur = e => {
       const { value } = e.target;
       this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     };
+
     compareToFirstPassword = (rule, value, callback) => {
       const { form } = this.props;
       if (value && value !== form.getFieldValue('password')) {
@@ -51,21 +54,13 @@ class RegistrationForm extends React.Component {
         callback();
       }
     };
+
     validateToNextPassword = (rule, value, callback) => {
       const { form } = this.props;
       if (value && this.state.confirmDirty) {
         form.validateFields(['confirm'], { force: true });
       }
       callback();
-    };
-    handleWebsiteChange = value => {
-      let autoCompleteResult;
-      if (!value) {
-        autoCompleteResult = [];
-      } else {
-        autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-      }
-      this.setState({ autoCompleteResult });
     };
   
     render() {
@@ -93,16 +88,16 @@ class RegistrationForm extends React.Component {
       return (
         <Form {...formItemLayout} onSubmit={this.handleSubmit} className="register">
             <Form.Item label = {
-                        <span> Username&nbsp;
-                                <Tooltip title="What do you want others to call you?">
-                                <Icon type="question-circle-o" />
-                                </Tooltip>
-                        </span> }>
-            { getFieldDecorator (
-                'username', 
-                { rules: [
-                    { required: true, message: 'Please input your username!'}],
-                })(<Input />)}
+              <span> Username&nbsp;
+                      <Tooltip title="What do you want others to call you?">
+                      <Icon type="question-circle-o" />
+                      </Tooltip>
+              </span> }>
+              { getFieldDecorator (
+                  'username', 
+                  { rules: [
+                      { required: true, message: 'Please input your username!'}],
+                  })(<Input />)}
             </Form.Item>
 
             <Form.Item label="Password" hasFeedback>

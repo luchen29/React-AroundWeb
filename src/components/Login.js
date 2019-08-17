@@ -9,13 +9,12 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-      }
-      fetch(`${API_ROOT}/login`, {
-            method: 'POST',
-            body: JSON.stringify ({
-                username: values.username,
-                password: values.password,
-            })
+        fetch(`${API_ROOT}/login`, {
+          method: 'POST',
+          body: JSON.stringify ({
+              username: values.username,
+              password: values.password,
+          })
         })
         .then((response) => {
             if (response.ok) {
@@ -30,9 +29,10 @@ class NormalLoginForm extends React.Component {
             
         }) 
         .catch((err) => {
-            console.log(err)
+            console.error(err)
             message.error('Login Failed.')
         } )
+      }
     });
   };
 
@@ -66,7 +66,6 @@ class NormalLoginForm extends React.Component {
             Log in
           </Button>
           Or <Link to="/register">register now!</Link>
-          {/* Or <a href="/register">register now!</a> */}
         </Form.Item>
       </Form>
     );
