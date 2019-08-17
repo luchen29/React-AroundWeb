@@ -23,8 +23,8 @@ class NormalCreatePostForm extends React.Component{
             <Form {...formItemLayout}>
                 <Form.Item label="Message">
                     { getFieldDecorator( 'message', 
-                        { rules: [{required: true, message: "Please imput a post message."}] })
-                        (<Input />)}
+                        { rules: [{required: true, message: "Please imput a post message."}] })(<Input />)
+                    }
                 </Form.Item>
                 <Form.Item label="Image/Video">
                     <div className="dropbox" >
@@ -32,8 +32,7 @@ class NormalCreatePostForm extends React.Component{
                             {   valuePropName: 'fileList',
                                 getValueFromEvent: this.normFile,
                                 rules: [{ required: true, message: "Please select an image."}]
-                            })
-                            (   <Upload.Dragger name="files" beforeUpload={this.beforUpload}>
+                            })( <Upload.Dragger name="files" beforeUpload={this.beforUpload}>
                                     <p className="ant-upload-drag-icon">
                                         <Icon type="inbox" />
                                     </p>
@@ -43,8 +42,7 @@ class NormalCreatePostForm extends React.Component{
                                     <p className="ant-upload-hint">
                                         Support for a single or bulk upload
                                     </p>
-                                </Upload.Dragger>
-                            )
+                                </Upload.Dragger>)
                         }
                     </div>
                 </Form.Item>

@@ -1,13 +1,12 @@
 import React from 'react';
-import { Tabs, Button, Spin, Row, Col } from 'antd';
+import { Tabs, Spin, Row, Col } from 'antd';
 import { API_ROOT, TOKEN_KEY, GEO_OPTIONS, POS_KEY, AUTH_HEADER, 
         POST_TYPE_IMAGE, POST_TYPE_VIDEO, POST_TYPE_UNKNOWN} from '../constants';
 import { Gallery } from './Gallery';
 import { CreatePostButton } from './CreatePostButton';
-
+import { AroundMap } from './AroundMap';
 
 const TabPane = Tabs.TabPane;
-
 
 export class Home extends React.Component{
     state = {
@@ -19,9 +18,10 @@ export class Home extends React.Component{
 
     componentDidMount(){
         if ("geolocation" in navigator) {
-            this.setState({ 
-                isLoadingGeoLocation: true,
-                error: ''});
+            this.setState(
+                {   isLoadingGeoLocation: true,
+                    error: ''
+                });
             navigator.geolocation.getCurrentPosition(
                 this.onSuccessLoadGeoLocation,
                 this.onFailedLoadGeoLocation,
@@ -142,7 +142,16 @@ export class Home extends React.Component{
             <Tabs tabBarExtraContent={operations} className="main-tabs"> 
                 <TabPane tab="Image Posts" key="1">{this.renderPosts(POST_TYPE_IMAGE)}</TabPane>
                 <TabPane tab="Video Posts" key="2">{this.renderPosts(POST_TYPE_VIDEO)}</TabPane>
-                <TabPane tab="Map" key="3">Content of Tab 3</TabPane>
+                <TabPane tab="Map" key="3">
+                    <AroundMap 
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&v=3.exp&libraries=geometry,drawing,places"
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div style={{ height: `600px` }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                        posts={this.state.posts}
+                        loadNearbyPosts={this.loadNearbyPosts}
+                    />
+                </TabPane>
             </Tabs>
         )
     }
